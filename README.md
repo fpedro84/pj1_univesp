@@ -9,5 +9,3 @@ python app.py
 ```
 
 Acesse em `http://localhost:5000`
-
-Feito para deploy no Render.com
