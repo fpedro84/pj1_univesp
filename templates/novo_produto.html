@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Novo Produto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/litera/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 40px;
+        }
+        .main-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .btn + .btn {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="main-section">
+        <h2 class="mb-4">Cadastrar Novo Produto</h2>
+        <form method="post">
+            <div class="form-group mb-3">
+                <label for="nome">Nome:</label>
+                <input type="text" class="form-control" name="nome" id="nome" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" class="form-control" name="quantidade" id="quantidade" required>
+            </div>
+            <div class="form-group mb-4">
+                <label for="preco">Preço (R$):</label>
+                <input type="number" step="0.01" class="form-control" name="preco" id="preco" required>
+            </div>
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <a href="{{ url_for('listar_estoque') }}" class="btn btn-outline-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

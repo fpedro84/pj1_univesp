@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle Financeiro MEI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/litera/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 40px;
+        }
+        .form-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-label {
+            margin-bottom: 6px;
+        }
+        .btn + .btn {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container">
+        <div class="form-section">
+            <h1 class="mb-4">Inserir Transação</h1>
+            <form method="post" class="row g-4">
+                <div class="col-md-4">
+                    <label class="form-label">Tipo</label>
+                    <select name="tipo" class="form-select" required>
+                        <option value="entrada">Entrada</option>
+                        <option value="saida">Saída</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Valor (R$)</label>
+                    <input type="number" step="0.01" name="valor" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Serviço</label>
+                    <input type="text" name="quem" class="form-control" required>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Motivo</label>
+                    <input type="text" name="motivo" class="form-control" required>
+                </div>
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

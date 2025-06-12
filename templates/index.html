@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Resumo Financeiro - Controle MEI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/litera/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            padding-top: 40px;
+            background-color: #f8f9fa;
+        }
+        .card {
+            border-radius: 1rem;
+        }
+        h3 {
+            font-weight: 700;
+        }
+        .btn-voltar {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('resumo') }}" class="btn btn-outline-primary btn-voltar">← Ir para o Caixa</a>
+
+        <h1 class="mb-4 text-center">Resumo Financeiro</h1>
+
+        <div class="row text-center mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="card bg-success text-white shadow-sm p-4">
+                    <h5>Saldo Atual</h5>
+                    <h3>R$ {{ "%.2f"|format(saldo) }}</h3>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card bg-primary text-white shadow-sm p-4">
+                    <h5>Valor do Estoque</h5>
+                    <h3>R$ {{ "%.2f"|format(valor_estoque) }}</h3>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card bg-warning text-dark shadow-sm p-4">
+                    <h5>Movimentos Registrados</h5>
+                    <h3>{{ total_movimentos }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4 p-4">
+            <h5 class="mb-3">Histórico de Entradas e Saídas</h5>
+            <canvas id="graficoCaixa" height="120"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('graficoCaixa').getContext('2d');
+        const grafico = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ datas|tojson }},
+                datasets: [
+                    {
+                        label: 'Entradas',
+                        data: {{ entradas|tojson }},
+                        backgroundColor: 'rgba(40, 167, 69, 0.8)'
+                    },
+                    {
+                        label: 'Saídas',
+                        data: {{ saidas|tojson }},
+                        backgroundColor: 'rgba(220, 53, 69, 0.8)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 10 }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

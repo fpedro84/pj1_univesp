@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle Financeiro MEI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/litera/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 40px;
+        }
+        .main-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .btn + .btn {
+            margin-left: 10px;
+        }
+        .badge {
+            font-size: 1rem;
+            padding: 0.5em 0.75em;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container">
+        <div class="main-section">
+            <h1 class="mb-4">Caixa da Empresa</h1>
+            <div class="mb-4 d-flex flex-wrap gap-2">
+    <a href="{{ url_for('novo_movimento') }}" class="btn btn-primary">
+        + Nova Movimentação
+    </a>
+    
+    <a href="{{ url_for('exportar_excel') }}" class="btn btn-outline-success">
+        <img src="{{ url_for('static', filename='exportar.png') }}" width="20" height="20" class="me-2" alt="Ícone Exportar">
+        Exportar Planilha
+    </a>
+
+    <a href="{{ url_for('listar_estoque') }}" class="btn btn-outline-secondary">
+        <img src="{{ url_for('static', filename='estoque.png') }}" width="20" height="20" class="me-2" alt="Ícone Estoque">
+        Estoque
+    </a>
+
+    <a href="{{ url_for('index') }}" class="btn btn-outline-info">
+        <img src="{{ url_for('static', filename='inicio.png') }}" width="20" height="20" class="me-2" alt="Ícone Início">
+        Início
+    </a>
+</div>
+
+            <h4 class="mb-4">
+                <img src="{{ url_for('static', filename='lucros.png') }}" width="32" height="32" class="me-2" alt="Ícone de Lucros">
+                Saldo Atual: 
+                <span class="badge bg-{{ 'success' if saldo >= 0 else 'danger' }}">
+                    R$ {{ "%.2f"|format(saldo) }}
+                </span>
+            </h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Valor (R$)</th>
+                            <th>Serviço</th>
+                            <th>Motivo</th>
+                            <th>Horário</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in movimentos %}
+                        <tr>
+                            <td>{{ m.tipo.capitalize() }}</td>
+                            <td>{{ "%.2f"|format(m.valor) }}</td>
+                            <td>{{ m.quem }}</td>
+                            <td>{{ m.motivo }}</td>
+                            <td>{{ m.horario.strftime('%d/%m/%Y %H:%M') }}</td>
+                            <td>
+                                <a href="{{ url_for('excluir_movimento', id=m.id) }}"
+                                   class="btn btn-sm btn-danger"
+                                   onclick="return confirm('Tem certeza que deseja excluir esta movimentação?')">
+                                   Excluir
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
